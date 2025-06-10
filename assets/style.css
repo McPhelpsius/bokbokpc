@@ -1,0 +1,39 @@
+html,
+body {
+  font-family: "Proza Libre", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 80px;
+  font-size: 32px;
+  font-weight: 800;
+  background: #bb3e3e;
+  color: #ddd;
+  padding: 0.5rem 3rem;
+}
+
+header img {
+  max-width: 130px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1000px;
+  margin: 2rem 3rem;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 600px;
+  margin: 0;
+}
+li {
+  font-size: 16px;
+  padding: 0.25rem 0;
+}
