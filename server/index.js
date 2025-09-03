@@ -6,6 +6,15 @@ import qs from 'querystring';
 import https from 'https';
 import fs from 'fs';
 import cors from 'cors';
+import path from 'path';
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(process.cwd(), '../dist')));
+
+// Handle React routing - send all non-API requests to React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(process.cwd(), '../dist/index.html'));
+});
 
 dotenv.config();
 const app = express();
