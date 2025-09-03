@@ -23,7 +23,7 @@ export async function getTeamsAndLeagueData() {
     const standingsTeams = Object.keys(teams).map(teamKey => teams[teamKey].team).filter(team => team)
 
     const teamsData: Team[] = standingsTeams.map((team) => {
-        const propzero = team[0].reduce((accumulator, current) => {
+        const propzero = team[0].reduce((accumulator: any, current: any) => {
             if (current) {
                 return { ...accumulator, ...current }
             }

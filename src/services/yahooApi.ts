@@ -1,6 +1,5 @@
 // Fetch Yahoo Fantasy Football games from backend
 
-import type { Welcome } from "../types";
 
 // Simple redirect to Yahoo OAuth
 export const redirectToYahooAuth = () => {
@@ -61,7 +60,7 @@ export const refreshAccessToken = async (): Promise<string | null> => {
 };
 
 // Fetch Yahoo Fantasy Football games with automatic token refresh
-export async function fetchLeagueData(): Promise<Welcome> {
+export async function fetchLeagueData(): Promise<any> {
   let token = getStoredToken();
   
   if (!token) {

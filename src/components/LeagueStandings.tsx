@@ -1,7 +1,7 @@
-import { Team } from "../types"
+import type { Team } from "../types"
 
 
-export const LeagueStandings: React.FC<{teams: Team[]}> = (props) => {
+export const LeagueStandings: React.FC<{teams: Team[] | null}> = (props) => {
 
     return (
         <div id="teams-list">

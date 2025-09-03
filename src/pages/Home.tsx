@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { redirectToYahooAuth, getStoredToken, clearTokens } from '../services/yahooApi';
+import { redirectToYahooAuth, getStoredToken } from '../services/yahooApi';
 import {LeagueStandings} from "../components/LeagueStandings"
 import {getTeamsAndLeagueData} from '../services/frontEndData'
+import type { Team } from '../types';
+import type { StandingsResponseLeague } from '../types/standingsResponse';
 
 
-const Home: React.FC = (props) => {
-  const [loading, setLoading] = useState(false);
+const Home: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [teams, setTeams] = useState()
-  const [league, setLeague] = useState()
+  const [error] = useState<string | null>(null);
+  const [teams, setTeams] = useState<Team[] | null>(null)
+  const [league, setLeague] = useState<StandingsResponseLeague | null>(null)
 
   // Check if user is already authenticated when component mounts
   useEffect(() => {
@@ -25,21 +26,24 @@ const Home: React.FC = (props) => {
   }, []);
 
   async function handleLogin () {
-    const done  = await redirectToYahooAuth();
+    await redirectToYahooAuth();
 
     setTeamsAndLeague()
   };
 
-  const handleLogout = () => {
-    clearTokens();
-    setIsAuthenticated(false);
-    setError(null);
-  };
+  // const handleLogout = () => {
+  //   clearTokens();
+  //   setIsAuthenticated(false);
+  //   setError(null);
+  // };
 
   async function setTeamsAndLeague () {
-    const {teamsData, leagueData} = await getTeamsAndLeagueData().then(data => data)
-setTeams(teamsData)
-setLeague(leagueData)
+    const data = await getTeamsAndLeagueData().then(data => data)
+    if(!data) return
+
+
+      setTeams(data.teamsData)
+      setLeague(data.leagueData)
   }
 
 

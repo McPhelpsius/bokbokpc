@@ -1,8 +1,8 @@
-import React, {FC, useState} from 'react'
+import React from 'react'
 
 
 // 
-export const Matchups = () => {
+export const Matchups: React.FC = () => {
     // '/yahoo/matchups'
-    <h1>Matchups</h1>
+   return (<h1>Matchups</h1>)
 }
