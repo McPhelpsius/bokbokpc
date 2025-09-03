@@ -8,14 +8,6 @@ import fs from 'fs';
 import cors from 'cors';
 import path from 'path';
 
-// Serve static files from the React app build directory
-app.use(express.static(path.join(process.cwd(), '../dist')));
-
-// Handle React routing - send all non-API requests to React app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(process.cwd(), '../dist/index.html'));
-});
-
 dotenv.config();
 const app = express();
 app.use(express.json()); // Parse JSON bodies
@@ -28,6 +20,15 @@ const PORT = process.env.PORT || 3000;
 const YAHOO_CLIENT_ID = process.env.YAHOO_CLIENT_ID;
 const YAHOO_CLIENT_SECRET = process.env.YAHOO_CLIENT_SECRET;
 const YAHOO_REDIRECT_URI = process.env.YAHOO_REDIRECT_URI;
+
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(process.cwd(), '../dist')));
+
+// Handle React routing - send all non-API requests to React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(process.cwd(), '../dist/index.html'));
+});
 
 // Get OAuth URL (for frontend to use)
 app.get('/auth/yahoo/url', (req, res) => {
