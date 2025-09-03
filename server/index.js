@@ -3,16 +3,25 @@ import express from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import qs from 'querystring';
-import https from 'https';
-import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import cors from 'cors';
+
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import path from 'path';
 
 dotenv.config();
 const app = express();
 app.use(express.json()); // Parse JSON bodies
+// Configure CORS for production and development
+const allowedOrigins = process.env.NODE_ENV === 'production' 
+  ? [process.env.FRONTEND_URL || 'https://bokbokpc.info']
+  : ['http://localhost:5173', 'https://localhost:5173'];
+
 app.use(cors({
-	origin: ['http://localhost:5173', 'https://localhost:5173'],
+	origin: allowedOrigins,
 	credentials: true
 }));
 const PORT = process.env.PORT || 3000;
@@ -69,14 +78,20 @@ app.get('/auth/yahoo/callback', async (req, res) => {
 		console.log('Successfully got tokens, redirecting to frontend...');
 		
 		// Redirect back to frontend with tokens
-		const frontendUrl = `http://localhost:5173/auth/success?access_token=${encodeURIComponent(access_token)}&refresh_token=${encodeURIComponent(refresh_token)}`;
+		const frontendBaseUrl = process.env.NODE_ENV === 'production' 
+			? (process.env.FRONTEND_URL || 'https://bokbokpc.info')
+			: 'http://localhost:5173';
+		const frontendUrl = `${frontendBaseUrl}/auth/success?access_token=${encodeURIComponent(access_token)}&refresh_token=${encodeURIComponent(refresh_token)}`;
 		res.redirect(frontendUrl);
 	} catch (err) {
 		console.error('OAuth callback error:', err.message);
 		console.error('Full error:', err.response?.data || err);
 		
 		// Redirect to frontend with error
-		const errorUrl = `http://localhost:5173/auth/error?error=${encodeURIComponent(err.message)}`;
+		const frontendBaseUrl = process.env.NODE_ENV === 'production' 
+			? (process.env.FRONTEND_URL || 'https://bokbokpc.info')
+			: 'http://localhost:5173';
+		const errorUrl = `${frontendBaseUrl}/auth/error?error=${encodeURIComponent(err.message)}`;
 		res.redirect(errorUrl);
 	}
 });
@@ -171,14 +186,19 @@ app.get('/yahoo/matchups', async (req, res) => {
 	
 });
 
+// Serve static files from the React app build directory (production only)
+if (process.env.NODE_ENV === 'production') {
+	const buildPath = path.join(__dirname, '../dist');
+	app.use(express.static(buildPath));
+	
+	// Handle React routing - send all non-API requests to React app
+	app.get('*', (req, res) => {
+		res.sendFile(path.join(buildPath, 'index.html'));
+	});
+}
 
-
-// Read SSL certificate and key
-const sslOptions = {
-	key: fs.readFileSync('server.key'),
-	cert: fs.readFileSync('server.cert'),
-};
-
-https.createServer(sslOptions, app).listen(PORT, () => {
-	console.log(`HTTPS server running on https://localhost:${PORT}`);
+// Start server (HTTP only - DigitalOcean handles HTTPS)
+app.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`);
+	console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
