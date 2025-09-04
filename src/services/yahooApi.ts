@@ -3,7 +3,7 @@
 
 // Simple redirect to Yahoo OAuth
 export const redirectToYahooAuth = () => {
-  window.location.href = 'https://localhost:3000/auth/yahoo';
+  window.location.href = `${import.meta.env.VITE_API_URL}/auth/yahoo`;
 };
 
 // Get stored access token
@@ -30,7 +30,7 @@ export const refreshAccessToken = async (): Promise<string | null> => {
   }
 
   try {
-    const response = await fetch('https://localhost:3000/auth/yahoo/refresh', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/yahoo/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export async function fetchLeagueData(): Promise<any> {
   }
   
   // fetch(`https://localhost:3000/yahoo/games?access_token=${token}`);
-  const res = await fetch(`https://localhost:3000/yahoo/league?access_token=${token}`);
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/yahoo/league?access_token=${token}`);
   
   if (!res.ok) {
     if (res.status === 401) {
@@ -82,7 +82,7 @@ export async function fetchLeagueData(): Promise<any> {
       
       if (newToken) {
         // Retry with new token
-        const retryRes = await fetch(`https://localhost:3000/yahoo/league?access_token=${newToken}`);
+        const retryRes = await fetch(`${import.meta.env.VITE_API_URL}/yahoo/league?access_token=${newToken}`);
         if (retryRes.ok) {
           return retryRes.json();
         }
