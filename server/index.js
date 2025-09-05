@@ -191,7 +191,7 @@ app.get('/yahoo/matchups', async (req, res) => {
 
 // Serve static files from the React app build directory (production only)
 if (process.env.NODE_ENV === 'production') {
-	const buildPath = path.join(__dirname, '../dist');
+	const buildPath = path.join(process.cwd(), '../dist');
 	app.use(express.static(buildPath));
 	
 	// Handle React routing - send all non-API requests to React app

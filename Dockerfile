@@ -29,17 +29,24 @@ RUN apk add --no-cache dumb-init
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
+# Create server directory structure
+RUN mkdir -p server
+
 # Copy server package files
-COPY server/package*.json ./
+COPY server/package*.json ./server/
 
 # Install server dependencies
+WORKDIR /app/server
 RUN npm ci --only=production && npm cache clean --force
 
 # Copy server source code
 COPY server/ ./
 
-# Copy built frontend from builder stage
-COPY --from=frontend-builder /app/dist ./dist
+# Copy built frontend from builder stage to parent directory
+COPY --from=frontend-builder /app/dist ../dist
+
+# Set working directory back to server
+WORKDIR /app/server
 
 # Change ownership to non-root user
 RUN chown -R nextjs:nodejs /app
