@@ -29,6 +29,10 @@ const YAHOO_CLIENT_ID = process.env.YAHOO_CLIENT_ID;
 const YAHOO_CLIENT_SECRET = process.env.YAHOO_CLIENT_SECRET;
 const YAHOO_REDIRECT_URI = process.env.YAHOO_REDIRECT_URI;
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
 
 // Serve static files from the React app build directory
 app.use(express.static(path.join(process.cwd(), '../dist')));
