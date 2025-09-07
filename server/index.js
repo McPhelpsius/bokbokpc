@@ -6,21 +6,21 @@ import qs from 'querystring';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+import fs from 'fs';
+import https from 'https';
 
 // Get __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config();
 const app = express();
 app.use(express.json()); // Parse JSON bodies
 // Configure CORS for production and development
-const allowedOrigins = process.env.NODE_ENV === 'production' 
-  ? [process.env.FRONTEND_URL || 'https://bokbokpc.info']
-  : ['http://localhost:5173', 'https://localhost:5173'];
+dotenv.config();
+const frontendBaseUrl = process.env.FRONTEND_URL || 'https://bokbokpc.info'
 
 app.use(cors({
-	origin: allowedOrigins,
+	origin: frontendBaseUrl,
 	credentials: true
 }));
 const PORT = process.env.PORT || 3000;
@@ -33,10 +33,6 @@ const YAHOO_REDIRECT_URI = process.env.YAHOO_REDIRECT_URI;
 // Serve static files from the React app build directory
 app.use(express.static(path.join(process.cwd(), '../dist')));
 
-// Handle React routing - send all non-API requests to React app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(process.cwd(), '../dist/index.html'));
-});
 
 // Get OAuth URL (for frontend to use)
 app.get('/auth/yahoo/url', (req, res) => {
@@ -76,20 +72,12 @@ app.get('/auth/yahoo/callback', async (req, res) => {
 		const { access_token, refresh_token } = tokenRes.data;
 		console.log('Successfully got tokens, redirecting to frontend...');
 		
-		// Redirect back to frontend with tokens
-		const frontendBaseUrl = process.env.NODE_ENV === 'production' 
-			? (process.env.FRONTEND_URL || 'https://bokbokpc.info')
-			: 'http://localhost:5173';
 		const frontendUrl = `${frontendBaseUrl}/auth/success?access_token=${encodeURIComponent(access_token)}&refresh_token=${encodeURIComponent(refresh_token)}`;
 		res.redirect(frontendUrl);
 	} catch (err) {
 		console.error('OAuth callback error:', err.message);
 		console.error('Full error:', err.response?.data || err);
 		
-		// Redirect to frontend with error
-		const frontendBaseUrl = process.env.NODE_ENV === 'production' 
-			? (process.env.FRONTEND_URL || 'https://bokbokpc.info')
-			: 'http://localhost:5173';
 		const errorUrl = `${frontendBaseUrl}/auth/error?error=${encodeURIComponent(err.message)}`;
 		res.redirect(errorUrl);
 	}
@@ -187,17 +175,23 @@ app.get('/yahoo/matchups', async (req, res) => {
 
 // Serve static files from the React app build directory (production only)
 if (process.env.NODE_ENV === 'production') {
-	const buildPath = path.join(__dirname, '../dist');
+	const buildPath = path.join(__dirname, 'dist');
+	console.log(buildPath)
 	app.use(express.static(buildPath));
 	
-	// Handle React routing - send all non-API requests to React app
+
 	app.get('*', (req, res) => {
 		res.sendFile(path.join(buildPath, 'index.html'));
 	});
 }
 
-// Start server (HTTP only - DigitalOcean handles HTTPS)
-app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`);
-	console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+// Read SSL certificate and key
+const sslOptions = {
+	key: fs.readFileSync('server.key'),
+	cert: fs.readFileSync('server.cert'),
+};
+
+https.createServer(sslOptions, app).listen(PORT, () => {
+	console.log(`HTTPS server running on https://localhost:${PORT}`);
 });
+
