@@ -1,4 +1,4 @@
-# Frontend Dockerfile
+# Frontend Dockerfile - Development Mode
 FROM node:20-alpine
 
 # Set working directory
@@ -7,17 +7,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
+# Install dependencies (including dev dependencies)
 RUN npm ci
 
 # Copy source code
 COPY . .
 
-# Build the frontend
-RUN npm run build
+# Expose port for Vite dev server
+EXPOSE 5173
 
-# Expose port
-EXPOSE 3000
-
-# Start the development server
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+# Start the development server with hot reload
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
