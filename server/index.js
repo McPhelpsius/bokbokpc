@@ -176,12 +176,33 @@ app.get('/yahoo/matchups', async (req, res) => {
 
 	
 });
+app.get('yahoo/team', async (req, res) => {
+	const accessToken = req.query.access_token;
+	if (!accessToken) return res.status(400).send('Missing access_token');
+	try {
+		const url = 'https://fantasysports.yahooapis.com/fantasy/v2/team/461.l.146891.t.1?format=json';
+		const response = await axios.get(url, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+		res.json(response.data);
+	} catch (err) {
+		res.status(500).json({ error: err.message, details: err.response?.data });
+	}
+
+	
+});
 
 // Serve static files from the React app build directory (production only)
 if (process.env.NODE_ENV === 'production') {
 	const buildPath = path.join(__dirname, 'dist');
 	app.use(express.static(buildPath));
 	
+	app.get('/auth/success', (req, res) => {
+		console.log(buildPath)
+		res.sendFile(path.join(buildPath, 'index.html'));
+	});
 
 	app.get('*', (req, res) => {
 		res.sendFile(path.join(buildPath, 'index.html'));
@@ -191,7 +212,7 @@ if (process.env.NODE_ENV === 'production') {
 // Read SSL certificate and key
 const sslOptions = {
 	key: fs.readFileSync('server.key'),
-	cert: fs.readFileSync('server.cert'),
+	cert: fs.readFileSync('server.crt'),
 };
 
 https.createServer(sslOptions, app).listen(PORT, () => {

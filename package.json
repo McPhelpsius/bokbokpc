@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "SET NODE_ENV=development && vite",
+    "dev": "vite",
     "build": "vite build",
     "build:check": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "npm ci && npm run build && cd server && SET NODE_ENV=production && npm ci && node index.js",
+    "start": "npm ci && npm run build && cd server && NODE_ENV=production && npm ci && node index.js",
     "server:dev": "cd server && node index.js"
   },
   "dependencies": {

@@ -1,7 +1,6 @@
 import React from 'react'
-import type { Matchup } from '../types'
 
-export const Matchups: React.FC<{matchups: Matchup[] | null}> = (props) => {
+export const TeamStats: React.FC<{teamId: number | null}> = (props) => {
     
    return (
    <section>

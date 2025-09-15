@@ -54,3 +54,41 @@ export type Team = {
     points_against: number
   }
 }
+
+export type Matchup = {
+    is_matchup_of_the_week: string
+    teams: [
+      {
+        name: string
+        logo: string
+        manager: string
+        win_probability: number
+        team_points: {
+          coverage_type: string
+          week: string
+          total: string
+        },
+        team_projected_points: {
+          coverage_type: string
+          week: string
+          total: string
+        }
+      },
+      {
+        name: string
+        logo: string
+        manager: string
+        win_probability: number
+        team_points: {
+          coverage_type: string
+          week: string
+          total: string
+        },
+        team_projected_points: {
+          coverage_type: string
+          week: string
+          total: string
+        }
+      }
+    ]
+}

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { redirectToYahooAuth, getStoredToken } from '../services/yahooApi';
 import {LeagueStandings} from "../components/LeagueStandings"
-import {getTeamsAndLeagueData} from '../services/frontEndData'
+import {Matchups} from "../components/Matchups"
+import {getTeamsAndLeagueData, getMatchupsData} from '../services/frontEndData'
 import type { Team } from '../types';
 import type { StandingsResponseLeague } from '../types/standingsResponse';
 
@@ -10,6 +11,7 @@ const Home: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error] = useState<string | null>(null);
   const [teams, setTeams] = useState<Team[] | null>(null)
+  const [matchups, setMatchups] = useState<Team[] | null>(null)
   const [league, setLeague] = useState<StandingsResponseLeague | null>(null)
 
   // Check if user is already authenticated when component mounts
@@ -18,10 +20,10 @@ const Home: React.FC = () => {
     if (token) {
       setIsAuthenticated(true);
       setTeamsAndLeague()
+      setMatchupState()
     } else {
       handleLogin()
     }
-
     
   }, []);
 
@@ -40,12 +42,16 @@ const Home: React.FC = () => {
   async function setTeamsAndLeague () {
     const data = await getTeamsAndLeagueData().then(data => data)
     if(!data) return
-
-
       setTeams(data.teamsData)
       setLeague(data.leagueData)
   }
 
+  async function setMatchupState () {
+    const data = await getMatchupsData().then(data => data)
+    if(!data) return
+    console.log(data)
+      setMatchups(data)
+  }
 
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
@@ -67,6 +73,7 @@ const Home: React.FC = () => {
 
 
       <LeagueStandings teams={teams ? teams : null} />
+      <Matchups matchups={matchups ? matchups : null} />
 
       {/* Error Display */}
       {error && (
