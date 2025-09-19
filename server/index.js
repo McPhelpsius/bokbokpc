@@ -177,7 +177,6 @@ app.get('/yahoo/matchups', async (req, res) => {
 	
 });
 app.get('/yahoo/team', async (req, res) => {
-
 	const accessToken = req.query.access_token;
 	if (!accessToken) return res.status(400).send('Missing access_token');
 	try {
@@ -259,13 +258,22 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-// Read SSL certificate and key
-const sslOptions = {
-	key: fs.readFileSync('server.key'),
-	cert: fs.readFileSync('server.crt'),
-};
-
-https.createServer(sslOptions, app).listen(PORT, () => {
+// Try to read SSL certificate and key, fallback to HTTP if not available
+let server;
+try {
+	const sslOptions = {
+		key: fs.readFileSync('server.key'),
+		cert: fs.readFileSync('server.crt'),
+	};
+	server = https.createServer(sslOptions, app);
 	console.log(`HTTPS server running on https://localhost:${PORT}`);
+} catch (error) {
+	console.log('SSL certificates not found, starting HTTP server instead');
+	console.log(`HTTP server running on http://localhost:${PORT}`);
+	server = app;
+}
+
+server.listen(PORT, () => {
+	console.log(`Server started on port ${PORT}`);
 });
 

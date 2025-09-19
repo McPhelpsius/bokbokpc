@@ -1,0 +1,20 @@
+# Backend Dockerfile - Development Mode
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY server/package*.json ./
+
+# Install dependencies (including dev dependencies for development)
+RUN npm ci
+
+# Copy server source code
+COPY server/ ./
+
+# Expose port
+EXPOSE 3000
+
+# Start the server in development mode
+CMD ["npm", "start"]

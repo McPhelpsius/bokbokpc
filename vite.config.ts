@@ -7,5 +7,8 @@ export default defineConfig({
   define: {
     // Set default API URL for production
     'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL || '')
+  },
+  server: {
+    allowedHosts: ['bokbokpc.info', 'localhost']
   }
 })
