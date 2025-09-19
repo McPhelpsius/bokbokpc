@@ -45,16 +45,18 @@ export const refreshAccessToken = async (): Promise<string | null> => {
 };
 
 async function checkOrRefreshToken() {
-  const token = getStoredToken();
+  let token = getStoredToken();
   if (!token) {
     // Try to refresh token if we have a refresh token
     await refreshAccessToken();
 
-    const token = getStoredToken();
+    token = getStoredToken();
     if (!token) {
       throw new Error('No access token found. Please login first.');
     }
   }
+
+  return token;
 }
 
 // Simple redirect to Yahoo OAuth
@@ -64,21 +66,22 @@ export const redirectToYahooAuth = () => {
 };
 
 
-async function makeApiRequest(endpoint: string): Promise<any> {
+async function makeYahooApiRequest(endpoint: string): Promise<any> {
   await checkOrRefreshToken();
   const token = getStoredToken();
+  const appendChar = endpoint.includes('?') ? '&' : '?';
 
-  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/yahoo${endpoint}?access_token=${token}`);
+  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/yahoo/${endpoint}${appendChar}access_token=${token}`);
 
   if (!res.ok) {
-    if (res.status === 401) {
+    if (res.status === 401 || res.status === 500) {
       // Token expired, try to refresh
-      console.log('Access token expired, attempting refresh...');
+      console.log('attempting token refresh...');
       const newToken = await refreshAccessToken();
       
       if (newToken) {
         // Retry with new token
-        const retryRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/yahoo${endpoint}access_token=${newToken}`);
+        const retryRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/yahoo/${endpoint}${appendChar}access_token=${newToken}`);
         if (retryRes.ok) {
           return retryRes;
         }
@@ -87,7 +90,7 @@ async function makeApiRequest(endpoint: string): Promise<any> {
       // Refresh failed or retry failed
       throw new Error('Access token expired. Please login again.');
     }
-    throw new Error(`Failed to fetch games data: ${res.statusText}`);
+    throw new Error(`Failed to fetch data: ${res.statusText}`);
   }
 
   return res;
@@ -105,10 +108,9 @@ export const getStoredRefreshToken = (): string | null => {
   return localStorage.getItem('yahoo_refresh_token');
 };
 
-
 // Fetch Yahoo Fantasy Football games with automatic token refresh
 export async function fetchLeagueData(): Promise<any> {
-  const res = await makeApiRequest('/league');
+  const res = await makeYahooApiRequest('league');
   console.table(res)
   return res.json();
 }
@@ -135,6 +137,7 @@ export async function fetchMatchupsData(): Promise<any> {
       
       if (newToken) {
         // Retry with new token
+
         const retryRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/yahoo/matchups?access_token=${newToken}`);
         if (retryRes.ok) {
           return retryRes.json();
@@ -149,6 +152,23 @@ export async function fetchMatchupsData(): Promise<any> {
   return res.json();
 }
 
-export function fetchIndividualTeamData(teamId: number): Promise<any> {
-  checkOrRefreshToken()
+export async function fetchIndividualTeamData(teamId: number): Promise<any> {
+  const res = await makeYahooApiRequest(`team?teamId=${teamId}`);
+
+  return res.json();
+}
+export async function fetchIndividualTeamStats(teamId: number): Promise<any> {
+  const res = await makeYahooApiRequest(`team/stats?teamId=${teamId}`);
+
+  return res.json();
+}
+export async function fetchIndividualTeamMatchups(teamId: number): Promise<any> {
+  const res = await makeYahooApiRequest(`team/matchups?teamId=${teamId}`);
+
+  return res.json();
+}
+export async function fetchIndividualTeamRoster(teamId: number): Promise<any> {
+  const res = await makeYahooApiRequest(`team/roster?teamId=${teamId}`);
+
+  return res.json();
 }
