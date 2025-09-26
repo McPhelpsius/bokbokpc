@@ -41,7 +41,7 @@ async function refreshAccessToken (): Promise<string | null> {
   }
 
   try {
-    const response = await fetch(`${process.env.FRONTEND_URL}/auth/yahoo/refresh`, {
+    const response = await fetch(`/api/auth/yahoo/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

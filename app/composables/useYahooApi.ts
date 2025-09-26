@@ -11,7 +11,7 @@ async function makeYahooApiRequest(endpoint: string): Promise<any> {
   const token = getStoredToken();
   const appendChar = endpoint.includes('?') ? '&' : '?';
 
-  const res = await fetch(`https://localhost:3000/yahoo/${endpoint}${appendChar}access_token=${token}`);
+  const res = await fetch(`/api/yahoo/${endpoint}${appendChar}access_token=${token}`);
 
   if (!res.ok) {
     if (res.status === 401 || res.status === 500) {
@@ -21,7 +21,7 @@ async function makeYahooApiRequest(endpoint: string): Promise<any> {
       
       if (newToken) {
         // Retry with new token
-        const retryRes = await fetch(`https://localhost:3000/yahoo/${endpoint}${appendChar}access_token=${newToken}`);
+        const retryRes = await fetch(`/api/yahoo/${endpoint}${appendChar}access_token=${newToken}`);
         if (retryRes.ok) {
           return retryRes;
         }
@@ -53,7 +53,7 @@ async function fetchMatchupsData(): Promise<any> {
     }
   }
   
-  const res = await fetch(`https://localhost:3000/yahoo/matchups?access_token=${token}`);
+  const res = await fetch(`/api/yahoo/matchups?access_token=${token}`);
   
   if (!res.ok) {
     if (res.status === 401) {
@@ -64,7 +64,7 @@ async function fetchMatchupsData(): Promise<any> {
       if (newToken) {
         // Retry with new token
 
-        const retryRes = await fetch(`https://localhost:3000/yahoo/matchups?access_token=${newToken}`);
+        const retryRes = await fetch(`/api/yahoo/matchups?access_token=${newToken}`);
         if (retryRes.ok) {
           return retryRes.json();
         }
