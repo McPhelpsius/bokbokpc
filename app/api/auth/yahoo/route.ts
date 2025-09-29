@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const authUrl = new URL('https://bokbokpc.info/api.login.yahoo.com/oauth2/request_auth');
+  const authUrl = new URL('https://api.login.yahoo.com/oauth2/request_auth');
   authUrl.searchParams.set('client_id', clientId);
   authUrl.searchParams.set('redirect_uri', redirectUri);
   authUrl.searchParams.set('response_type', 'code');
