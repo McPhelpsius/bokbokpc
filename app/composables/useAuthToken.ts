@@ -1,3 +1,4 @@
+import { redirectToYahooAuth } from "./useYahooApi";
 
 
 // Get stored access token
@@ -37,11 +38,12 @@ async function refreshAccessToken (): Promise<string | null> {
   console.log('refreshing token')
   const refreshToken = getStoredRefreshToken();
   if (!refreshToken) {
+    redirectToYahooAuth()
     return null;
   }
 
   try {
-    const response = await fetch(`${process.env.FRONTEND_URL}/auth/yahoo/refresh`, {
+    const response = await fetch(`/api/auth/yahoo/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

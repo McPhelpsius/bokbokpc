@@ -4,14 +4,14 @@ import { Suspense, useEffect, useState, Context, use } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './auth.module.css';
 
-export default function AuthErrorPage({searchParams}: {searchParams: Context<unknown>}) {
+export default function AuthErrorPage({searchParams}: {searchParams: Context<{error?: string}>}) {
   const router = useRouter();
-  const params = use(searchParams) as URLSearchParams;
+  const params = use(searchParams) as {error?: string};
   
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    const errorParam = params.get('error');
+    const errorParam = params.error;
     setError(errorParam || 'An unknown error occurred during authentication');
   }, [router, params]);
 

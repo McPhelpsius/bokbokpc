@@ -1,0 +1,40 @@
+.roster-item {
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  display: grid;
+  grid-template-columns: 50px 50px 1fr;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  gap: 20px;
+}
+
+h3 {
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.roster-item:last-child {
+  border-bottom: none;
+}
+
+.position-img-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-img {
+  border-radius: 60px;
+  height: 40px;
+}
+
+.player-name {
+  font-weight: bold;
+}
+
+.player-position {
+  font-style: italic;
+  color: #666;
+}
