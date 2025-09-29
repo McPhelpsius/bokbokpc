@@ -39,9 +39,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy public folder (create it if it doesn't exist)
+# Create public directory (Next.js will use it if needed)
 RUN mkdir -p ./public
-COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
 RUN mkdir -p .next
