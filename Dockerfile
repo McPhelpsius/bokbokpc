@@ -38,12 +38,12 @@ RUN adduser --system --uid 1001 nextjs
 
 # Copy source code and dependencies
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/next.config.ts ./next.config.ts
-COPY --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder /app/next-env.d.ts ./next-env.d.ts
-COPY --from=builder /app/app ./app
-COPY --from=builder /app/public ./public
+COPY package.json ./package.json
+COPY next.config.ts ./next.config.ts
+COPY tsconfig.json ./tsconfig.json
+COPY next-env.d.ts ./next-env.d.ts
+COPY app ./app
+COPY public ./public
 
 # Create .next directory and set proper permissions
 RUN mkdir -p .next
