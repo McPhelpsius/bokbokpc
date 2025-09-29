@@ -3,7 +3,7 @@ import { checkOrRefreshToken, getStoredToken, refreshAccessToken } from "./useAu
 // Simple redirect to Yahoo OAuth
 function redirectToYahooAuth () {
   console.log({redirect: process.env.FRONTEND_URL})
-  window.location.href = `/api/auth/yahoo`;
+  window.location.href = `https://bokbokpc.info/api/auth/yahoo`;
 };
 
 async function makeYahooApiRequest(endpoint: string): Promise<any> {
@@ -11,7 +11,7 @@ async function makeYahooApiRequest(endpoint: string): Promise<any> {
   const token = getStoredToken();
   const appendChar = endpoint.includes('?') ? '&' : '?';
 
-  const res = await fetch(`/api/yahoo/${endpoint}${appendChar}access_token=${token}`);
+  const res = await fetch(`https://bokbokpc.info/api/yahoo/${endpoint}${appendChar}access_token=${token}`);
 
   if (!res.ok) {
     if (res.status === 401 || res.status === 500) {
@@ -21,7 +21,7 @@ async function makeYahooApiRequest(endpoint: string): Promise<any> {
       
       if (newToken) {
         // Retry with new token
-        const retryRes = await fetch(`/api/yahoo/${endpoint}${appendChar}access_token=${newToken}`);
+        const retryRes = await fetch(`https://bokbokpc.info/api/yahoo/${endpoint}${appendChar}access_token=${newToken}`);
         if (retryRes.ok) {
           return retryRes;
         }
@@ -53,7 +53,7 @@ async function fetchMatchupsData(): Promise<any> {
     }
   }
   
-  const res = await fetch(`/api/yahoo/matchups?access_token=${token}`);
+  const res = await fetch(`https://bokbokpc.info/api/yahoo/matchups?access_token=${token}`);
   
   if (!res.ok) {
     if (res.status === 401) {
@@ -64,7 +64,7 @@ async function fetchMatchupsData(): Promise<any> {
       if (newToken) {
         // Retry with new token
 
-        const retryRes = await fetch(`/api/yahoo/matchups?access_token=${newToken}`);
+        const retryRes = await fetch(`https://bokbokpc.info/api/yahoo/matchups?access_token=${newToken}`);
         if (retryRes.ok) {
           return retryRes.json();
         }

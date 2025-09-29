@@ -1,16 +1,16 @@
+'use client';
+import {fetchIndividualTeamMatchups} from '../../composables/useYahooApi'
 import React, { useEffect, useState } from 'react'
 
-import {
-    fetchIndividualTeamMatchups,
-} from '../../composables/useYahooApi';
 
-export const TeamMatchups: React.FC = () => {
-    const {id} = useParams();
+
+
+export const TeamMatchups: React.FC<{teamId: string}> = (props) => {
     const [teamMatchups, setTeamMatchups] = useState(null)
     
     useEffect(() => {
         if(!teamMatchups) {
-            fetchIndividualTeamMatchups(Number(id)).then(data => {
+            fetchIndividualTeamMatchups(Number(props.teamId)).then(data => {
                 console.log('team Matchups', data);
                 setTeamMatchups(data)
             })

@@ -43,7 +43,7 @@ async function refreshAccessToken (): Promise<string | null> {
   }
 
   try {
-    const response = await fetch(`/api/auth/yahoo/refresh`, {
+    const response = await fetch(`https://bokbokpc.info/api/auth/yahoo/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
