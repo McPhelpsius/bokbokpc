@@ -1,3 +1,4 @@
+import { redirectToYahooAuth } from "./useYahooApi";
 
 
 // Get stored access token
@@ -37,6 +38,7 @@ async function refreshAccessToken (): Promise<string | null> {
   console.log('refreshing token')
   const refreshToken = getStoredRefreshToken();
   if (!refreshToken) {
+    redirectToYahooAuth()
     return null;
   }
 

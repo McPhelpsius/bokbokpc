@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import {
     getTeamStats
-} from '../../services/frontEndData'
+} from '../../composables/frontEndData'
 
-export const TeamStats: React.FC = () => {
-    const {id} = useParams();
+export const TeamStats: React.FC<{teamId: string}> = (props) => {
     const [teamStats, setTeamStats] = useState(null)
     
     useEffect(() => {
         if(!teamStats) {
-            getTeamStats(Number(id)).then(data => {
+            getTeamStats(Number(props.teamId)).then(data => {
                 console.log('team stats', data);
                 setTeamStats(data)
             })

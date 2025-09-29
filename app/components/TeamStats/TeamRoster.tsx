@@ -1,14 +1,17 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+
+
 import {
-    getTeamRoster
-} from '../../services/frontEndData'
+    fetchIndividualTeamRoster,
+} from '../../composables/useYahooApi';
+
 import './team-stats.scss'
 
 import type { Player } from '../../components/TeamStats/types';
 
-export const TeamRoster: React.FC = () => {
-    const {id} = useParams();
+export const TeamRoster: React.FC<{teamId: string}> = (props) => {
     const [teamRoster, setTeamRoster] = useState<Player[] | null>(null)
     const [inactiveTeamRoster, setInactiveTeamRoster] = useState<Player[] | null>(null)
     const [activeTeamRoster, setActiveTeamRoster] = useState<Player[] | null>(null)
@@ -16,13 +19,13 @@ export const TeamRoster: React.FC = () => {
     useEffect(() => {
         if(!teamRoster) {
          
-    getTeamRoster(Number(id)).then(data => {
+    fetchIndividualTeamRoster(Number(props.teamId)).then(data => {
         console.log('team Roster', data);
         setTeamRoster(data)
         setActiveTeamRoster(data.filter(player => !['BN', 'IR'].includes(player.selected_position[1].position)))
         setInactiveTeamRoster(data.filter(player => ['BN', 'IR'].includes(player.selected_position[1].position)))
     })
-  }})
+  }}, [props.teamId, teamRoster])
     
    return (
    <section>

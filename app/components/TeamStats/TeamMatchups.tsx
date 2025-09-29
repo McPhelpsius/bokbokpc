@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+
 import {
-    getTeamMatchups
-} from '../../services/frontEndData'
+    fetchIndividualTeamMatchups,
+} from '../../composables/useYahooApi';
 
 export const TeamMatchups: React.FC = () => {
     const {id} = useParams();
@@ -10,7 +10,7 @@ export const TeamMatchups: React.FC = () => {
     
     useEffect(() => {
         if(!teamMatchups) {
-            getTeamMatchups(Number(id)).then(data => {
+            fetchIndividualTeamMatchups(Number(id)).then(data => {
                 console.log('team Matchups', data);
                 setTeamMatchups(data)
             })

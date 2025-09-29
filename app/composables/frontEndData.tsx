@@ -4,7 +4,6 @@ import {
     fetchMatchupsData,
     fetchIndividualTeamData,
     fetchIndividualTeamStats,
-    fetchIndividualTeamMatchups,
     fetchIndividualTeamRoster
 } from './useYahooApi';
 
@@ -39,10 +38,9 @@ export async function getMatchupsData() {
 
 export function getTeamData(teamId: number) {
     return fetchIndividualTeamData(teamId).then(data => {
-        if (!data) return
-        const team = data.fantasy_content.team;
-        const teamWithValidValues = eliminateEmptyValues(team[0])
-        return teamWithValidValues
+        if (!data) return null
+        
+        return data
     })
 }
 
@@ -53,20 +51,4 @@ export function getTeamStats(teamId: number) {
     })
 }
 
-export function getTeamMatchups(teamId: number) {
-    return fetchIndividualTeamMatchups(teamId).then(data => {
-        if (!data) return
-        const team = data.fantasy_content.team;
-        const matchupsFlattenedArray = filterOnlyValidObjects(Object.values(team[1].matchups)).map(matchup => matchup?.matchup)
-        return matchupsFlattenedArray
-    })
-}
-export async function getTeamRoster(teamId: number): Promise<Player[]>{
-    return fetchIndividualTeamRoster(teamId).then(data => {
-        if (!data) return
-        const team = data.fantasy_content.team;    
-        const playersFlattenedArray = filterOnlyValidObjects(Object.values(team[1].roster[0].players)).map(player => ({...eliminateEmptyValues(player?.player[0]), ...player.player[1]}))
-        return playersFlattenedArray;
-    })
-}
 

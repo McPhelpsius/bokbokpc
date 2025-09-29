@@ -17,8 +17,11 @@ const router = useRouter();
     const accessToken = params.access_token;
     const refreshToken = params.refresh_token;
 
-    if (accessToken && refreshToken) {
-      setTokensInLocalStorage(accessToken, refreshToken)
+    if (accessToken) {
+      localStorage.setItem('yahoo_access_token', accessToken);
+    }
+    if (refreshToken) {
+      localStorage.setItem('yahoo_refresh_token', refreshToken);
     }
 
 
