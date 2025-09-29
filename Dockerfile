@@ -41,9 +41,10 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY package.json ./package.json
 COPY next.config.ts ./next.config.ts
 COPY tsconfig.json ./tsconfig.json
-COPY next-env.d.ts ./next-env.d.ts
 COPY app ./app
-COPY public ./public
+
+# Create public directory (Next.js will use it if needed)
+RUN mkdir -p ./public
 
 # Create .next directory and set proper permissions
 RUN mkdir -p .next
