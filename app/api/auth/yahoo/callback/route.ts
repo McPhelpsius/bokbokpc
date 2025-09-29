@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     
     if (!code) {
       console.error('OAuth callback: Missing code parameter');
-      const frontendUrl = process.env.FRONTEND_URL || 'https://bokbokpc.info';
+      const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'https://bokbokpc.info';
       return NextResponse.redirect(
         new URL('/auth/error?error=Missing authorization code', frontendUrl)
       );
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
 
     if (!clientId || !clientSecret || !redirectUri) {
       console.error('Missing Yahoo OAuth configuration');
-      const frontendUrl = process.env.FRONTEND_URL || 'https://bokbokpc.info';
+      const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'https://bokbokpc.info';
       return NextResponse.redirect(
         new URL('/auth/error?error=Server configuration error', frontendUrl)
       );
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
     if (!tokenResponse.ok) {
       const errorText = await tokenResponse.text();
       console.error('Token exchange failed:', errorText);
-      const frontendUrl = process.env.FRONTEND_URL || 'https://bokbokpc.info';
+      const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'https://bokbokpc.info';
       return NextResponse.redirect(
         new URL('/auth/error?error=Token exchange failed', frontendUrl)
       );
@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
 
     if (!access_token || !refresh_token) {
       console.error('Invalid token response:', tokens);
-      const frontendUrl = process.env.FRONTEND_URL || 'https://bokbokpc.info';
+      const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'https://bokbokpc.info';
       return NextResponse.redirect(
         new URL('/auth/error?error=Invalid token response', frontendUrl)
       );
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
     console.log('Successfully got tokens, redirecting to frontend...');
     
     // Redirect to success page with tokens using FRONTEND_URL
-    const frontendUrl = process.env.FRONTEND_URL || 'https://bokbokpc.info';
+    const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'https://bokbokpc.info';
     const successUrl = new URL('/auth/success', frontendUrl);
     successUrl.searchParams.set('access_token', access_token);
     successUrl.searchParams.set('refresh_token', refresh_token);
@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
     
   } catch (error) {
     console.error('OAuth callback error:', error);
-    const frontendUrl = process.env.FRONTEND_URL || 'https://bokbokpc.info';
+    const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'https://bokbokpc.info';
     return NextResponse.redirect(
       new URL(`/auth/error?error=${encodeURIComponent(error instanceof Error ? error.message : 'Unknown error')}`, frontendUrl)
     );
