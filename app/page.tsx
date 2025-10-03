@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import {LeagueStandings} from "./components/LeagueStandings"
 import {Matchups} from "./components/Matchups"
-import {getTeamsAndLeagueData, getMatchupsData} from './composables/frontEndData'
+import { getTeamsAndLeagueData, getMatchupsData } from './composables/frontEndData'
 import type { Team } from './types';
 import type { StandingsResponseLeague } from './types/standingsResponse';
 
@@ -76,7 +76,7 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
           <h2>Your Fantasy Dashboard</h2>
           <p>You have successfully authenticated with Yahoo Fantasy Sports!</p>
           
-          <div className={styles.features}>
+          <article className={styles.features}>
             <div className={styles.feature}>
               <h3>📊 League Standings</h3>
               <LeagueStandings teams={teams ? teams : null} />
@@ -86,7 +86,7 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
               <h3>⚔️ Matchups</h3>
               <Matchups matchups={matchups ? matchups : null} />
             </div>
-          </div>
+          </article>
         </div>
       </main>
     </div>

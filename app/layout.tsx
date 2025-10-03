@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "River Rats Fantasy Football",
-  description: "Track the league from a dedicated web app",
+  title: "River Rats, baby!",
+  description: "River Rats league web app",
 };
 
 export default function RootLayout({

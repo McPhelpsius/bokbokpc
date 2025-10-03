@@ -4,14 +4,8 @@ import {
     fetchMatchupsData,
     fetchIndividualTeamData,
     fetchIndividualTeamStats,
-    fetchIndividualTeamRoster
 } from './useYahooApi';
 
-import {
-    eliminateEmptyValues,
-    filterOnlyValidObjects
-} from './useFormatYahooData';
-import type { Player } from '../components/TeamStats/types';
 
     
 export async function getTeamsAndLeagueData() {
@@ -27,7 +21,7 @@ export async function getTeamsAndLeagueData() {
     }    
 }
 
-export async function getMatchupsData() {
+export function getMatchupsData() {
     return fetchMatchupsData().then(data => {
         if (!data) return
 

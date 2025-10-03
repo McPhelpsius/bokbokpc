@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Exchange code for access token
-    console.log('Exchanging code for access token...');
+    console.log('Exchanging code for access token...', redirectUri);
     
     const tokenResponse = await fetch('https://api.login.yahoo.com/oauth2/get_token', {
       method: 'POST',

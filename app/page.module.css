@@ -5,7 +5,8 @@
   min-height: 100vh;
   padding: 2rem;
   font-family: var(--font-geist-sans);
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #1f1f1f;
+  color: white;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -92,15 +93,7 @@
 
 .feature {
   padding: 1.5rem;
-  background: #f9fafb;
-  border-radius: 12px;
   border: 1px solid #e5e7eb;
-  transition: all 0.2s ease;
-}
-
-.feature:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .feature h3 {
@@ -127,20 +120,11 @@
   list-style-position: inside;
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
-}
-
 .main code {
   font-family: inherit;
   padding: 2px 4px;
   border-radius: 4px;
   font-weight: 600;
-}
-
-.ctas {
-  display: flex;
-  gap: 16px;
 }
 
 .ctas a {
