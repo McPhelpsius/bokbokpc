@@ -26,28 +26,25 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Development image - run in dev mode
+# Build the application
+RUN npm run build
+
+# Production image - run in production mode
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy source code and dependencies
-COPY --from=deps /app/node_modules ./node_modules
-COPY package.json ./package.json
-COPY next.config.ts ./next.config.ts
-COPY tsconfig.json ./tsconfig.json
-COPY app ./app
+# Copy the built application from the builder stage
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
 
-# Create public directory (Next.js will use it if needed)
-RUN mkdir -p ./public
-
-# Create .next directory and set proper permissions
-RUN mkdir -p .next
+# Set proper permissions
 RUN chown -R nextjs:nodejs /app
 
 USER nextjs
@@ -57,5 +54,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Start the Next.js application in development mode
-CMD ["npm", "run", "dev"]
+# Start the Next.js application in production mode
+CMD ["node", "server.js"]
