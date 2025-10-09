@@ -20,31 +20,19 @@
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-}
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3rem;
-  padding: 2rem;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.header h1 {
-  margin: 0;
-  color: #1f2937;
-  font-size: 2rem;
-  font-weight: 700;
+  h1 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 2rem;
+    font-weight: 700;
+  }
 }
 
 .userInfo {
   display: flex;
   align-items: center;
   gap: 1rem;
-  color: #6b7280;
   font-weight: 500;
 }
 
@@ -81,7 +69,6 @@
 
 .content > p {
   margin: 0 0 2rem;
-  color: #6b7280;
   font-size: 1rem;
 }
 
@@ -105,7 +92,6 @@
 
 .feature p {
   margin: 0;
-  color: #6b7280;
   font-size: 0.875rem;
   line-height: 1.4;
 }

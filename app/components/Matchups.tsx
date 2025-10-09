@@ -2,16 +2,28 @@
 
 import React from 'react'
 import type { Matchup } from '../types'
+import styles from './matchups.module.css'
 
 export const Matchups: React.FC<{matchups: Matchup[] | null}> = (props) => {
     
    return (
    <section>
-       <h2>Matchups</h2>
         {props.matchups?.map((matchup)=>
-            <h3 key={matchup.teams[0].name} className="matchups-display">
-                <img src={matchup.teams[0].logo}/> {matchup.teams[0].name} vs {matchup.teams[1].name}<img src={matchup.teams[1].logo}/>
-            </h3>
+            <div key={matchup.teams[0].name} className={styles.matchupDisplay}>
+                <img src={matchup.teams[0].logo}/> 
+                <p>
+                    <span>
+                        {matchup.teams[0].name}
+                    </span>
+                    <span className={styles.vs}>
+                        vs
+                    </span>
+                    <span>
+                        {matchup.teams[1].name}
+                    </span>
+                </p>
+                <img src={matchup.teams[1].logo}/>
+            </div>
         )}
    </section>
    )

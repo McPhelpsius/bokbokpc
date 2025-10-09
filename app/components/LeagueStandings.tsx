@@ -15,7 +15,7 @@ export const LeagueStandings: React.FC<{teams: Team[] | null}> = (props) => {
                         <h4>{team.name} - {team.managers[0].manager.nickname}</h4>
                         <ul className={styles.list}>
                             <li>Record: {team.team_standings.outcome_totals.wins} - {team.team_standings.outcome_totals.losses} - {team.team_standings.outcome_totals.ties}</li>
-                            <li>Total Points: {team.team_standings.points_for} - {team.team_standings.points_against}</li>
+                            <li>Total Points: {Number(team.team_standings.points_for).toFixed(2)} - {Number(team.team_standings.points_against).toFixed(2)}</li>
                         </ul>
                     </div>
                 </a>

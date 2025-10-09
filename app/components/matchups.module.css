@@ -1,0 +1,48 @@
+.matchupDisplay {
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  grid-gap: 24px;
+  color: black;
+  align-items: center;
+  text-align: center;
+
+  &:not(:last-of-type) {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  p {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  &:not(:last-of-type) {
+    margin-bottom: 24px;
+  }
+  img {
+    height: 70px;
+    width: 70px;
+    border-radius: 500px;
+  }
+
+  .standing {
+    font-weight: 600;
+    font-size: 32px;
+  }
+}
+
+.vs {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.list {
+  list-style: none;
+
+  li {
+    margin-bottom: 0;
+  }
+}

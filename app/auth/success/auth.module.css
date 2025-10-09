@@ -91,7 +91,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -154,7 +155,8 @@
   flex-wrap: wrap;
 }
 
-.retryButton, .homeButton {
+.retryButton,
+.homeButton {
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 8px;
@@ -204,8 +206,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Mobile responsiveness */
@@ -213,30 +219,33 @@
   .container {
     padding: 1rem;
   }
-  
+
   .card {
     max-width: 100%;
   }
-  
-  .success, .error {
+
+  .success,
+  .error {
     padding: 2rem 1.5rem;
   }
-  
-  .success h1, .error h1 {
+
+  .success h1,
+  .error h1 {
     font-size: 1.5rem;
   }
-  
+
   .checkmark {
     width: 60px;
     height: 60px;
     font-size: 2rem;
   }
-  
+
   .actions {
     flex-direction: column;
   }
-  
-  .retryButton, .homeButton {
+
+  .retryButton,
+  .homeButton {
     width: 100%;
   }
 }

@@ -65,25 +65,20 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <div className={styles.header}>
+        
+        <div className={styles.content}>
           <h1>🏈 River Rats Fantasy Football</h1>
           <div className={styles.userInfo}>
             <span>Welcome! You are authenticated.</span>
           </div>
-        </div>
-        
-        <div className={styles.content}>
-          <h2>Your Fantasy Dashboard</h2>
-          <p>You have successfully authenticated with Yahoo Fantasy Sports!</p>
-          
           <article className={styles.features}>
             <div className={styles.feature}>
-              <h3>📊 League Standings</h3>
+              <h2>📊 League Standings</h2>
               <LeagueStandings teams={teams ? teams : null} />
       
             </div>
             <div className={styles.feature}>
-              <h3>⚔️ Matchups</h3>
+              <h2>⚔️ Matchups</h2>
               <Matchups matchups={matchups ? matchups : null} />
             </div>
           </article>
