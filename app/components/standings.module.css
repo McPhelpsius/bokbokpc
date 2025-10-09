@@ -1,7 +1,7 @@
 .teamDisplay {
   display: grid;
   grid-template-columns: 30px 40px 1fr;
-  grid-gap: 30px;
+  grid-gap: 40px;
   color: black;
   align-items: center;
 

@@ -1,6 +1,6 @@
 .matchupDisplay {
   display: grid;
-  grid-template-columns: 50px 1fr 50px;
+  grid-template-columns: 70px 1fr 70px;
   grid-gap: 24px;
   color: black;
   align-items: center;
@@ -9,6 +9,7 @@
   &:not(:last-of-type) {
     padding-bottom: 12px;
     border-bottom: 1px solid #ddd;
+    margin-bottom: 12px;
   }
 
   p {
@@ -19,9 +20,6 @@
     line-height: 1.2;
   }
 
-  &:not(:last-of-type) {
-    margin-bottom: 24px;
-  }
   img {
     height: 70px;
     width: 70px;

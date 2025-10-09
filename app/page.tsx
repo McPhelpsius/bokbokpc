@@ -4,8 +4,8 @@ import { redirectToYahooAuth } from './composables/useYahooApi';
 import { getStoredToken } from './composables/useAuthToken';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
-import {LeagueStandings} from "./components/LeagueStandings"
-import {Matchups} from "./components/Matchups"
+import { LeagueStandings } from "./components/LeagueStandings"
+import { Matchups } from "./components/Matchups"
 import { getTeamsAndLeagueData, getMatchupsData } from './composables/frontEndData'
 import type { Team } from './types';
 import type { StandingsResponseLeague } from './types/standingsResponse';
@@ -42,10 +42,17 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
     if(!data) return
       setTeams(data.teamsData)
       setLeague(data.leagueData)
+      localStorage.setItem("teamsData", JSON.stringify(data.teamsData))
+      localStorage.setItem("teamsDataDate", JSON.stringify(new Date().toJSON()))
+      localStorage.setItem("leagueData", JSON.stringify(data.leagueData))
+      localStorage.setItem("leagueDataDate", JSON.stringify(new Date().toJSON()))
   }
 
   async function setMatchupState () {
     const data = await getMatchupsData().then(data => data)
+    localStorage.setItem("matchups", JSON.stringify(data))
+    localStorage.setItem("matchupDate", JSON.stringify(new Date().toJSON()))
+
     if(!data) return
     
     setMatchups(data)
@@ -67,10 +74,7 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
       <main className={styles.main}>
         
         <div className={styles.content}>
-          <h1>🏈 River Rats Fantasy Football</h1>
-          <div className={styles.userInfo}>
-            <span>Welcome! You are authenticated.</span>
-          </div>
+          <h1><img src="./river-rat-square.jpg" alt="" /> River Rats Fantasy Football</h1>
           <article className={styles.features}>
             <div className={styles.feature}>
               <h2>📊 League Standings</h2>

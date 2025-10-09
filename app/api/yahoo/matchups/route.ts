@@ -23,9 +23,9 @@ export async function GET(request: NextRequest) {
               return { ...accumulator, ...current }
           }
       }, {})
-      const {name, team_logos, managers} = propzero
+      const {team_key, name, team_logos, managers} = propzero
 
-      return   { name, logo: team_logos[0].team_logo.url, manager: managers[0].manager.nickname, ...team[1] }
+      return {team_key, name, logo: team_logos[0].team_logo.url, manager: managers[0].manager.nickname, ...team[1] }
     }
 
     const dataObjects = filterOnlyValidObjects(Object.values(response.fantasy_content.league[1].scoreboard[0].matchups))

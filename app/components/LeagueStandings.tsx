@@ -7,7 +7,8 @@ export const LeagueStandings: React.FC<{teams: Team[] | null}> = (props) => {
     return (
         <div id="teams-list">
             {props.teams?.map((team) => (
-                <a key={team.team_id} href={`team/${team.team_id}`} className={styles.teamDisplay}>
+                // <a key={team.team_id} href={`team/${team.team_id}`} className={styles.teamDisplay}>
+                <div key={team.team_id} className={styles.teamDisplay}>
                     <span className={styles.standing}>#{team.team_standings.rank}</span>
                     <img src={team.team_logos[0].team_logo.url} alt="" />
                     
@@ -18,7 +19,7 @@ export const LeagueStandings: React.FC<{teams: Team[] | null}> = (props) => {
                             <li>Total Points: {Number(team.team_standings.points_for).toFixed(2)} - {Number(team.team_standings.points_against).toFixed(2)}</li>
                         </ul>
                     </div>
-                </a>
+                </div>
 
             ))}
         </div>
