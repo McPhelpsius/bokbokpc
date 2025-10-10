@@ -5,7 +5,6 @@ import type { Matchup } from '../types'
 import styles from './matchups.module.css'
 
 export const Matchups: React.FC<{matchups: Matchup[] | null}> = (props) => {
-    console.log(props.matchups)
     
    return (
    <section>

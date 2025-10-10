@@ -1,0 +1,279 @@
+.page {
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: var(--font-lato);
+  color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #1a1a1a;
+  }
+}
+
+.header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 1200px;
+  margin: 0 auto 2rem auto;
+
+  img {
+    height: 70px;
+    width: auto;
+    border-radius: 900px;
+  }
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+
+  h1 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-rye);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    img {
+      height: 70px;
+      width: auto;
+      border-radius: 900px;
+    }
+  }
+}
+
+.content {
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.content h2 {
+  margin: 0 0 0.5rem;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: var(--font-rye);
+}
+
+.content > p {
+  margin: 0 0 2rem;
+  font-size: 1rem;
+}
+
+.feature p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.main ul {
+  font-family: var(--font-lato);
+  list-style: none;
+  padding-left: 0;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  list-style-position: inside;
+  margin: 0 auto;
+
+  li {
+    display: grid;
+    grid-template-columns: 60px auto 1fr;
+    gap: 8px;
+    padding: 4px 0;
+    align-items: center;
+  }
+}
+.right {
+  text-align: right;
+
+  h2 {
+    text-align: right;
+    margin-left: auto;
+  }
+
+  ul li {
+    grid-template-columns: 1fr auto 60px;
+  }
+
+  hr {
+    margin-left: auto;
+  }
+}
+
+.headToHead {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 32px;
+  font-family: var(--font-rye);
+}
+
+.main ul {
+  hr {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    width: 70%;
+  }
+
+  li {
+    padding: 2px 0;
+  }
+}
+
+.versus {
+  margin-top: 250px;
+  font-size: 20px;
+}
+.roster {
+  min-height: 300px;
+}
+
+.headshot {
+  height: 40px;
+  border-radius: 500px;
+}
+
+.teamHeader {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+
+  img {
+    height: 50px;
+    width: 50px;
+    border-radius: 500px;
+  }
+}
+
+.playerPosition {
+  max-width: 28px;
+  overflow: hidden;
+  text-wrap: nowrap;
+}
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  a.primary:hover {
+    background: var(--button-primary-hover);
+    border-color: transparent;
+  }
+
+  a.secondary:hover {
+    background: var(--button-secondary-hover);
+    border-color: transparent;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .headToHead {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .versus {
+    margin-top: 0;
+    margin: auto;
+    display: none;
+  }
+
+  .headshot {
+    height: 20px;
+  }
+
+  .page {
+    padding: 32px 12px;
+    padding-bottom: 80px;
+  }
+
+  .content {
+    padding: 1rem;
+    h2 {
+      font-size: 1.2rem;
+    }
+  }
+
+  .teamHeader {
+    margin-bottom: 5px;
+    img {
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  .main {
+    align-items: center;
+
+    ul {
+      font-size: 14px;
+
+      hr {
+        max-width: 200px;
+      }
+
+      li {
+        grid-template-columns: 30px auto 1fr;
+        gap: 5px;
+        line-height: 1;
+      }
+    }
+  }
+
+  .right ul li {
+    grid-template-columns: 1fr auto 30px;
+  }
+
+  .hideSm {
+    display: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .main ul li {
+    grid-gap: 5px;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "name name" "position headshot ";
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+  }
+  .right ul li {
+    place-items: end;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "name name" "headshot position";
+  }
+
+  .headshot {
+    grid-area: headshot;
+  }
+
+  .playerPosition {
+    grid-area: position;
+  }
+  .playerName {
+    grid-area: name;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo {
+    filter: invert();
+  }
+}

@@ -9,7 +9,6 @@ export const TeamStats: React.FC<{teamId: string}> = (props) => {
     useEffect(() => {
         if(!teamStats) {
             getTeamStats(Number(props.teamId)).then(data => {
-                console.log('team stats', data);
                 setTeamStats(data)
             })
         }

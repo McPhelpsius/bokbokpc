@@ -46,16 +46,16 @@ async function fetchMatchupsData(): Promise<any> {
   return await makeYahooApiRequest('matchups')
 }
 
-async function fetchIndividualTeamData(teamId: number): Promise<any> {
+async function fetchIndividualTeamData(teamId: string): Promise<any> {
   return await makeYahooApiRequest(`team?teamId=${teamId}`);
 }
-async function fetchIndividualTeamStats(teamId: number): Promise<any> {
+async function fetchIndividualTeamStats(teamId: string): Promise<any> {
   return await makeYahooApiRequest(`team/stats?teamId=${teamId}`);
 }
-async function fetchIndividualTeamMatchups(teamId: number): Promise<any> {
+async function fetchIndividualTeamMatchups(teamId: string): Promise<any> {
   return await makeYahooApiRequest(`team/matchups?teamId=${teamId}`);
 }
-async function fetchIndividualTeamRoster(teamId: number): Promise<any> {
+async function fetchIndividualTeamRoster(teamId: string): Promise<any> {
   return await makeYahooApiRequest(`team/roster?teamId=${teamId}`);
 }
 

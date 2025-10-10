@@ -20,7 +20,6 @@ export const TeamRoster: React.FC<{teamId: string}> = (props) => {
         if(!teamRoster) {
          
     fetchIndividualTeamRoster(Number(props.teamId)).then(data => {
-        console.log('team Roster', data);
         setTeamRoster(data)
         setActiveTeamRoster(data.filter(player => !['BN', 'IR'].includes(player.selected_position[1].position)))
         setInactiveTeamRoster(data.filter(player => ['BN', 'IR'].includes(player.selected_position[1].position)))

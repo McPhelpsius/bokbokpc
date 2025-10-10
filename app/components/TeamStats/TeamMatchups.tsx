@@ -11,7 +11,6 @@ export const TeamMatchups: React.FC<{teamId: string}> = (props) => {
     useEffect(() => {
         if(!teamMatchups) {
             fetchIndividualTeamMatchups(Number(props.teamId)).then(data => {
-                console.log('team Matchups', data);
                 setTeamMatchups(data)
             })
         }

@@ -17,8 +17,6 @@ export async function GET(request: NextRequest) {
   authUrl.searchParams.set('response_type', 'code');
   authUrl.searchParams.set('language', 'en-us');
 
-
-  console.log('Redirecting to Yahoo OAuth:', authUrl);
   return NextResponse.redirect(authUrl.toString());
 
 }

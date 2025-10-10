@@ -74,7 +74,6 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
       <main className={styles.main}>
         
         <div className={styles.content}>
-          <h1><img src="./river-rat-square.jpg" alt="" /> River Rats Fantasy Football</h1>
           <article className={styles.features}>
             <div className={styles.feature}>
               <h2>📊 League Standings</h2>

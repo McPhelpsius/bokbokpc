@@ -27,6 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${rye.variable} ${lato.variable}`}>
+            <header className="header">
+              <a href="/"><img src="/river-rat-square.jpg" alt="" /></a> <h1>River Rats Fantasy Football</h1>
+            </header>
           {children}
       </body>
     </html>
